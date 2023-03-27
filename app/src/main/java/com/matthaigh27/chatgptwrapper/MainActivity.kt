@@ -2,6 +2,7 @@ package com.matthaigh27.chatgptwrapper
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
@@ -10,6 +11,7 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.window.OnBackInvokedDispatcher
 import com.matthaigh27.chatgptwrapper.databinding.ActivityMainBinding
+
 
 class MainActivity : Activity() {
     private val userAgent =
@@ -21,6 +23,9 @@ class MainActivity : Activity() {
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         webView = binding.webView
@@ -46,6 +51,11 @@ class MainActivity : Activity() {
         webView.webViewClient = WebViewClient()
 
         webView.loadUrl(chatUrl)
+//        val intent = Intent(Intent.ACTION_MAIN)
+  //      intent.addCategory(Intent.CATEGORY_HOME)
+  //      intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+ //       startActivity(intent)
+//        finish()
     }
 
     @Deprecated("Deprecated in Java")
