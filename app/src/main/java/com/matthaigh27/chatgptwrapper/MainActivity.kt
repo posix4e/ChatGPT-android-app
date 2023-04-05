@@ -2,30 +2,27 @@ package com.matthaigh27.chatgptwrapper
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.view.WindowManager
+import android.webkit.PermissionRequest
+import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.window.OnBackInvokedDispatcher
 import com.matthaigh27.chatgptwrapper.databinding.ActivityMainBinding
 
-
 class MainActivity : Activity() {
     private val userAgent =
         "Mozilla/5.0 (Linux; Android 10) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.5563.57 Mobile Safari/537.36"
-    private val chatUrl = "https://chat.openai.com/"
+    private val chatUrl = "https://posix4e-langchainback2.hf.space/"
     private lateinit var binding: ActivityMainBinding
     private lateinit var webView: WebView
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         webView = binding.webView
@@ -49,14 +46,17 @@ class MainActivity : Activity() {
         webView.settings.domStorageEnabled = true
         webView.settings.javaScriptEnabled = true
         webView.webViewClient = WebViewClient()
-
+        webView.setWebChromeClient(object : WebChromeClient() {
+            override fun onPermissionRequest(request: PermissionRequest) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    request.grant(request.resources)
+                }
+            }
+        })
         webView.loadUrl(chatUrl)
-//        val intent = Intent(Intent.ACTION_MAIN)
-  //      intent.addCategory(Intent.CATEGORY_HOME)
-  //      intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
- //       startActivity(intent)
-//        finish()
+
     }
+
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
@@ -66,4 +66,5 @@ class MainActivity : Activity() {
         else
             super.onBackPressed()
     }
+
 }
